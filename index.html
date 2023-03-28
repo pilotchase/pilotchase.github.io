@@ -120,6 +120,8 @@
                             <li><a href="#pilot">Pilot</a>
                                 <ul class="nav">
                                     <li><a href="#pilot-base">Crew Bases</a></li>
+                                    <li><a href="#pilot-ftg-orig">FTG (Orig)</a></li>
+                                    <li><a href="#pilot-ftg-mid">Fatigue (Mid)</a></li>
                                     <li><a href="#pilot-sick-lh">Sick Removal (LH)</a></li>
                                     <li><a href="#pilot-sick-rsv">Sick Removal (RSV)</a></li>
                                     <li><a href="#pilot-mt-lh">Missed Trip (LH)</a></li>
@@ -408,6 +410,125 @@
                           </ol>
                           <hr/>
                     </section>
+
+                    <section id="pilot-ftg-orig">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Fatigue (Origination)</h4>
+                                <h5>Process (LH):</h5>
+
+                                <ol>
+                                    <li>Establish Fit For Duty Time</li>
+                                    <li>FEM Tool</li>
+                                    <li>Remove pilot from the sequence with 2G/FT</li>
+                                    <li>Add planned absense with FT code</li>
+                                    <li>Build RPT seq with difference between current time and SI time</li>
+                                    <li>Attach RPT seq to the pilot</li>
+                                    <li>Kill original seq</li>
+                                    <li>Recover open flying</li>
+                                </ol>
+
+                                <h5>FOS Entries:</h5>
+                                <pre class="brush: html; highlight: [2,4]">
+                                    2G/EMP/SEQ/DD/FT &#187;
+                                    ET &#187;
+                                    
+                                    A4/EMP/FT/DDMMMYY/DDMMMYY//STARTTIME/ENDTIME &#187;
+                                    ET &#187;
+                                    
+                                    H4(D/I)/BASE/EQ//DD &#182;
+                                    H7/RPT/DD/STA/STA/SITIME/CURR TIME - SI TIME (x.xx) &#187;
+                                    HZ/POS &#187;
+                                    ET &#187;
+
+                                    HU/EMP/POS/SEQ/DD/RP &#187;
+                                    ET &#187;
+
+                                    //Kill orig seq
+                                    HK/SEQ/DD/POS &#187;
+                                    ET &#187;
+                                </pre>
+
+                                <h5>Process (RSV):</h5>
+
+                                <ol>
+                                    <li>Establish Fit For Duty Time</li>
+                                    <li>FEM Tool</li>
+                                    <li>Remove pilot from the sequence with 2G/FT</li>
+                                    <li>Add planned absense with FT code</li>
+                                    <li>Build RPT seq with difference between current time and SI time</li>
+                                    <li>NBA RPT seq to the pilot</li>
+                                    <li>Assign callout pay with HM entry</li>
+                                    <li>Kill original seq</li>
+                                    <li>Transfer to PISKD to assign RAP</li>
+                                    <li>Recover open flying</li>
+                                </ol>
+
+                                <h5>FOS Entries:</h5>
+                                <pre class="brush: html; highlight: [2,4]">
+                                    2G/EMP/SEQ/DD/FT &#187;
+                                    ET &#187;
+                                    
+                                    A4/EMP/FT/DDMMMYY/DDMMMYY//STARTTIME/ENDTIME &#187;
+                                    ET &#187;
+                                    
+                                    H4(D/I)/BASE/EQ//DD &#182;
+                                    H7/RPT/DD/STA/STA/SITIME/CURR TIME - SI TIME (x.xx) &#187;
+                                    HZ/POS &#187;
+                                    ET &#187;
+
+                                    NBA/EMP/SEQ/DD/POS/RP &#187;
+                                    ET &#187;
+
+                                    //EQ is the 2 digit EQ code of first leg after FTG
+                                    HM/EMP/DD/138/EQ/2.00 &#187;
+                                    ET &#187;
+
+                                    //Kill orig seq
+                                    HK/SEQ/DD/POS &#187;
+                                    ET &#187;
+                                </pre>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </section>
+                <!-- end section -->
+
+                <section id="pilot-ftg-mid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Fatigue (Mid-Sequence)</h4>
+                            
+                            <ol>
+                                <li>Establish Fit For Duty Time</li>
+                                <li>FEM Tool</li>
+                                <li>Modify sequence with 25/MI, add FTG leg, add RPT leg 0.01 after FTG leg, remove affected legs</li>
+                                <li>If in base, add planned absense with FT code</li>
+                                <li>If RSV in base, transfer to PISKD for RAP</li>
+                                <li>Recover open flying</li>
+                            </ol>
+
+                            <h5>FOS Entries:</h5>
+                            <pre class="brush: html; highlight: [2,4]">
+                                HE/SEQ/DD/25/MI &#182;
+                                H9/FTG/DD/STA/STA/TIME/0.00 &#182;
+                                H7/RPT/DD/STA/STA/TIME/0.00 &#182;
+                                H6/FLT/DD/STA &#187;
+                                HZ/POS &#187;
+                                ET &#187;
+                                
+                                A4/EMP/FT/DDMMMYY/DDMMMYY//STARTTIME/ENDTIME &#187;
+                                ET &#187;
+                            </pre>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </section>
+            <!-- end section -->
+
+
                     <section id="pilot-sick-lh">
                         <div class="row">
                             <div class="col-md-12">
