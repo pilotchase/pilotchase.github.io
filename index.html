@@ -457,10 +457,10 @@
                                     <li>Establish Fit For Duty Time</li>
                                     <li>FEM Tool</li>
                                     <li>Remove pilot from the sequence with 2G/FT</li>
-                                    <li>Add planned absense with FT code</li>
                                     <li>Build RPT seq with difference between current time and SI time</li>
                                     <li>NBA RPT seq to the pilot</li>
                                     <li>Assign callout pay with HM entry</li>
+                                    <li>Add planned absense with FT code</li>
                                     <li>Kill original seq</li>
                                     <li>Transfer to PISKD to assign RAP</li>
                                     <li>Recover open flying</li>
@@ -469,9 +469,6 @@
                                 <h5>FOS Entries:</h5>
                                 <pre class="brush: html; highlight: [2,4]">
                                     2G/EMP/SEQ/DD/FT &#187;
-                                    ET &#187;
-                                    
-                                    A4/EMP/FT/DDMMMYY/DDMMMYY//STARTTIME/ENDTIME &#187;
                                     ET &#187;
                                     
                                     H4(D/I)/BASE/EQ//DD &#182;
@@ -484,6 +481,9 @@
 
                                     //EQ is the 2 digit EQ code of first leg after FTG
                                     HM/EMP/DD/138/EQ/2.00 &#187;
+                                    ET &#187;
+
+                                    A4/EMP/FT/DDMMMYY/DDMMMYY//STARTTIME/ENDTIME &#187;
                                     ET &#187;
 
                                     //Kill orig seq
