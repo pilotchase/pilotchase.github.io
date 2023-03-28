@@ -128,6 +128,8 @@
                                     <li><a href="#pilot-mt-rsv">Missed Trip (RSV)</a></li>
                                     <li><a href="#pilot-ee-lh">Emergency Removal (LH)</a></li>
                                     <li><a href="#pilot-ee-rsv">Emergency Removal (RSV)</a></li>
+                                    <li><a href="#pilot-dtnd-orig">DTND (Orig)</a></li>
+                                    <li><a href="#pilot-dtnd-mid">DTND (Mid)</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -681,6 +683,75 @@
                 <!-- end row -->
             </section>
         <!-- end section -->
+
+        <section id="pilot-dtnd-orig">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Delay Until Next Day (Origination)</h4>
+                    <h5>Process:</h5>
+
+                    <ol>
+                        <li>Remove from entire seq with 2G/17</li>
+                        <li>Kill original seq</li>
+                        <li>Rebuild seq for day the flight is now departing and send to PISKD</li>
+                        <li>Build RPT seq and send to PISKD via Ctrl panel with NSR</li>
+                    </ol>
+
+                    <h5>FOS Entries:</h5>
+                    <pre class="brush: html; highlight: [2,4]">
+                        2G/EMP/SEQ/DD/17 &#187;
+                        ET &#187;
+                        
+                        HK/SEQ/DD/POS &#187;
+                        ET &#187;
+
+                        H4(I/D)/BASE/EQ//DD &#182;
+                        H5/FLT/DD/STA &#187;
+                        H5/FLT/DD/STA &#187;
+                        HZ/POS &#187;
+                        ET &#187;
+
+                        H4(I/D)/BASE/EQ//DD &#182;
+                        H7/RPT/DD/STA/STA/TIME/0.00 &#187;
+                        HZ/POS &#187;
+                        ET &#187;
+                    </pre>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </section>
+
+        <section id="pilot-dtnd-mid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Delay Until Next Day (Mid)</h4>
+                    <h5>Process:</h5>
+
+                    <ol>
+                        <li>Modify seq with RO/17 (RFW), AF/AF (w/o RFW), 25/17 (RSV)</li>
+                        <li>End FDP with report leg</li>
+                        <li>Send override request via control panel</li>
+                        <li>Set new departure time</li>
+                        <li>Recover open flights</li>
+                    </ol>
+
+                    <h5>FOS Entries:</h5>
+                    <pre class="brush: html; highlight: [2,4]">
+                        HE/SEQ/DD/ADD/RMV &#182;
+                        H7/RPT/DD/STA/STA/TIME/0.00 &#187;
+                        HZ/POS &#187;
+                        ET &#187; !!! FOS WILL IGNORE AND THROW AN ERROR !!!
+
+                        HRDP//FLT/DD/STA/NEWTIME/NEWDD &#187;
+                        ET &#187;
+                    </pre>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </section>
+    <!-- end section -->
                 </div>
                 <!-- // end .col -->
 
