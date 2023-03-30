@@ -768,7 +768,7 @@
                                     HZ/POS &#187;
                                     ET &#187;
 
-                                    GOA/EMP/FLT/DD/FA/STA/STA/TKT &#187;
+                                    GOA/EMP/FLT/DD/POS/STA/STA/TKT &#187;
                                     ET &#187;
                                 </pre>
                             </div>
@@ -813,7 +813,7 @@
                                 GC/EMP/DDMMM//U/SK &#187;
                                 ET &#187;
 
-                                GOA/EMP/FLT/DD/FA/STA/STA/TKT &#187;
+                                GOA/EMP/FLT/DD/POS/STA/STA/TKT &#187;
                                 ET &#187;
                             </pre>
                         </div>
@@ -845,7 +845,7 @@
                                 HZ/POS &#187;
                                 ET &#187;
 
-                                GOA/EMP/FLT/DD/FA/STA/STA/A3D &#187;
+                                GOA/EMP/FLT/DD/POS/STA/STA/A3D &#187;
                                 ET &#187;
                             </pre>
                         </div>
@@ -885,7 +885,7 @@
                             GC/EMP/DD//U/TM &#187;
                             ET &#187;
 
-                            GOA/EMP/FLT/DD/FA/STA/STA/A3D &#187;
+                            GOA/EMP/FLT/DD/POS/STA/STA/A3D &#187;
                             ET &#187;
                         </pre>
                     </div>
@@ -894,6 +894,80 @@
                 <!-- end row -->
             </section>
         <!-- end section -->
+
+        <section id="pilot-ee-lh">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Emergency Removal (LH)</h4>
+                    <h5>Process:</h5>
+
+                    <ol>
+                        <li>Modify sequence with 25/EE, remove balance, add SUR leg to base</li>
+                        <li>GOA to base with A3D or Home (A12)</li>
+                        <li>Send contact slip</li>
+                        <li>Recover flying</li>
+                    </ol>
+
+                    <h5>FOS Entries:</h5>
+                    <pre class="brush: html; highlight: [2,4]">
+                        HE/SEQ/DD/25/EE &#182;
+                        H6/FLT/DD/STA &#182;
+                        H7/SUR/DD/STA/STA/TIME (0.01 after block in)/0.00 &#187;
+                        HZ/POS &#187;
+                        ET &#187;
+
+                        GOA/EMP/FLT/DD/POS/STA/STA/TKT &#187;
+                        ET &#187;
+                    </pre>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </section>
+    <!-- end section -->
+
+    <section id="pilot-ee-rsv">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Emergency Removal (RSV)</h4>
+                <h5>Process:</h5>
+
+                <ol>
+                    <li>Modify sequence with 25/15, remove balance, add SUR leg to base</li>
+                    <li>Set EE and unset if flown same day</li>
+                    <li>Set planned absense with EO</li>
+                    <li>GOA to base with A3D or Home (A12)</li>
+                    <li>Send contact slip</li>
+                    <li>Recover flying</li>
+                </ol>
+
+                <h5>FOS Entries:</h5>
+                <pre class="brush: html; highlight: [2,4]">
+                    HE/SEQ/DD/25/15 &#182;
+                    H6/FLT/DD/STA &#182;
+                    H7/SUR/DD/STA/STA/TIME (0.01 after block in)/0.00 &#187;
+                    HZ/POS &#187;
+                    ET &#187;
+
+                    GC/EMP/DD//S/EE &#187;
+                    ET &#187;
+
+                    //If flown same day
+                    GC/EMP/DD//U/EE &#187;
+                    ET &#187;
+
+                    A4/EMP/EO/DDMMMYY/DDMMMYY &#187;
+                    ET &#187;
+
+                    GOA/EMP/FLT/DD/POS/STA/STA/TKT &#187;
+                    ET &#187;
+                </pre>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </section>
+<!-- end section -->
 
         <section id="pilot-dtnd-orig">
             <div class="row">
