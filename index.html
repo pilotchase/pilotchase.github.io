@@ -115,6 +115,8 @@
                                     <li><a href="#fa-base">Crew Bases</a></li>
                                     <li><a href="#fa-sick">Sick Removal</a></li>
                                     <li><a href="#fa-mt">Missed Trip</a></li>
+                                    <li><a href="#fa-dtnd-orig">DTND (Orig)</a></li>
+                                    <li><a href="#fa-dtnd-mid">DTND (Mid)</a></li>
                                 </ul>
                             </li>
                             <li><a href="#pilot">Pilot</a>
@@ -320,6 +322,153 @@
                         <!-- end row -->
                     </section>
                 <!-- end section -->
+
+                <section id="fa-dtnd-orig">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Delay Until Next Duty Period (Origination)</h4>
+                            <h5>Process: Within Footprint</h5>
+
+                            <ol>
+                                <li>Ensure no a/c movement, otherwise process as Mid-Sequence</li>
+                                <li>Modify sequence with RS/ON and add RPT leg</li>
+                                <li>HRDC to add new departure time</li>
+                                <li>Build a report seq and send to FASKD via control panel</li>
+                            </ol>
+
+                            <h5>FOS Entries:</h5>
+                            <pre class="brush: html; highlight: [2,4]">
+                                HE/SEQ/DD/RS/ON &#182;
+                                H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
+                                HZ/POS &#187;
+                                ET &#187;
+
+                                HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
+                                ET &#187;
+
+                                H4(D/I)/BASE/EQ//DD &#182;
+                                H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
+                                HZ/POS &#187;
+                                ET &#187;
+                            </pre>
+
+                            <h5>Process: Outside Footprint CS Can't Replace</h5>
+
+                            <ol>
+                                <li>Modify the sequence with RS/ON to add RPT leg</li>
+                                <li>HRDC to add new departure time</li>
+                                <li>Send current sequence to FASKD via control panel for callout pay</li>
+                            </ol>
+
+                            <h5>FOS Entries:</h5>
+                            <pre class="brush: html; highlight: [2,4]">
+                                HE/SEQ/DD/RS/ON &#182;
+                                H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
+                                HZ/POS &#187;
+                                ET &#187;
+
+                                HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
+                                ET &#187;
+                            </pre>
+
+                            <h5>Process: Outside Footprint CS Can Replace</h5>
+
+                            <ol>
+                                <li>Remove FA from the sequence with a 2G/ON</li>
+                                <li>Kill the original sequence and rebuild for new departure day</li>
+                                <li>Build RPT seq and send to FASKD via control panel</li>
+                            </ol>
+
+                            <h5>FOS Entries:</h5>
+                            <pre class="brush: html; highlight: [2,4]">
+                                2G/EMP/SEQ/DD/ON &#187;
+                                ET &#187;
+
+                                HK/SEQ/DD/POS &#187;
+                                ET &#187;
+
+                                H4(D/I)/BASE/EQ//DD &#182;
+                                H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
+                                HZ/POS &#187;
+                                ET &#187;
+                            </pre>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </section>
+            <!-- end section -->
+
+            <section id="fa-dtnd-mid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Delay Until Next Duty Period (Mid-Sequence)</h4>
+                        <h5>Process: Prior to report</h5>
+
+                        <ol>
+                            <li>Modify sequence with RS/ON to add/remove legs</li>
+                            <li>HRDC to add new departure time (if staying on)</li>
+                            <li>Rebuild open legs and send to FASKD</li>
+                        </ol>
+
+                        <h5>FOS Entries:</h5>
+                        <pre class="brush: html; highlight: [2,4]">
+                            HE/SEQ/DD/RS/ON &#182;
+                            H6/FLT/DD/STA &#187;
+                            HZ/POS &#187;
+                            ET &#187;
+
+                            HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
+                            ET &#187;
+                        </pre>
+
+                        <h5>Process: Flight movement (RTD, DIV, Air Int)</h5>
+
+                        <ol>
+                            <li>HRDC to add new departure time</li>
+                            <li>HRRC to release crew</li>
+                            <li>Modify sequence with RS/MIC to remove any needed legs</li>
+                        </ol>
+
+                        <h5>FOS Entries:</h5>
+                        <pre class="brush: html; highlight: [2,4]">
+                            HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
+                            ET &#187;
+
+                            HRRC//FLT/DD/STA/RLSTIME/RLSDD &#187;
+                            ET &#187;
+                            
+                            HE/SEQ/DD/RS/MIC &#182;
+                            H6/FLT/DD/STA &#187;
+                            HZ/POS &#187;
+                            ET &#187;
+                        </pre>
+
+                        <h5>Process: After report no movement</h5>
+
+                        <ol>
+                            <li>Modify sequence with RS/ON and add a RPT leg and remove needed legs</li>
+                            <li>HRDC to add new departure time if staying on</li>
+                            <li>Rebuild open legs</li>
+                        </ol>
+
+                        <h5>FOS Entries:</h5>
+                        <pre class="brush: html; highlight: [2,4]">
+                            HE/SEQ/DD/RS/ON &#182;
+                            H7/RPT/DD/STA/STA/SITIME/x.xx (CURR TIME - SITIME)
+                            H6/FLT/DD/STA &#187;
+                            HZ/POS &#187;
+                            ET &#187;
+
+                            HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
+                            ET &#187;
+                        </pre>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </section>
+        <!-- end section -->
 
                 <section id="pilot" class="section">
 
@@ -712,7 +861,7 @@
                         ET &#187;
 
                         H4(I/D)/BASE/EQ//DD &#182;
-                        H7/RPT/DD/STA/STA/TIME/0.00 &#187;
+                        H7/RPT/DD/STA/STA/SITIME/x.xx (CURR TIME - SITIME) &#187;
                         HZ/POS &#187;
                         ET &#187;
                     </pre>
@@ -739,7 +888,7 @@
                     <h5>FOS Entries:</h5>
                     <pre class="brush: html; highlight: [2,4]">
                         HE/SEQ/DD/ADD/RMV &#182;
-                        H7/RPT/DD/STA/STA/TIME/0.00 &#187;
+                        H7/RPT/DD/STA/STA/CURRTIME/0.00 &#187;
                         HZ/POS &#187;
                         ET &#187; !!! FOS WILL IGNORE AND THROW AN ERROR !!!
 
