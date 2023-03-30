@@ -327,51 +327,29 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Delay Until Next Duty Period (Origination)</h4>
-                            <h5>Process: Within Footprint</h5>
+                            <h5>Process: CS Can't Replace Crew</h5>
 
                             <ol>
                                 <li>Ensure no a/c movement, otherwise process as Mid-Sequence</li>
                                 <li>Modify sequence with RS/ON and add RPT leg</li>
                                 <li>HRDC to add new departure time</li>
-                                <li>Build a report seq and send to FASKD via control panel</li>
+                                <li>Send current sequence via control panel for callout pay</li>
                             </ol>
 
                             <h5>FOS Entries:</h5>
                             <pre class="brush: html; highlight: [2,4]">
+                                <!-- ADD RPT LEG TO CURRENT SEQUENCE -->
                                 HE/SEQ/DD/RS/ON &#182;
                                 H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
                                 HZ/POS &#187;
                                 ET &#187;
 
-                                HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
-                                ET &#187;
-
-                                H4(D/I)/BASE/EQ//DD &#182;
-                                H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
-                                HZ/POS &#187;
-                                ET &#187;
-                            </pre>
-
-                            <h5>Process: Outside Footprint CS Can't Replace</h5>
-
-                            <ol>
-                                <li>Modify the sequence with RS/ON to add RPT leg</li>
-                                <li>HRDC to add new departure time</li>
-                                <li>Send current sequence to FASKD via control panel for callout pay</li>
-                            </ol>
-
-                            <h5>FOS Entries:</h5>
-                            <pre class="brush: html; highlight: [2,4]">
-                                HE/SEQ/DD/RS/ON &#182;
-                                H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
-                                HZ/POS &#187;
-                                ET &#187;
-
+                                <!-- ENTER NEW DEPARTURE TIME -->
                                 HRDC//FLT/DD/STA/NEWTIME/NEWDD &#187;
                                 ET &#187;
                             </pre>
 
-                            <h5>Process: Outside Footprint CS Can Replace</h5>
+                            <h5>Process: CS Can Replace Crew</h5>
 
                             <ol>
                                 <li>Remove FA from the sequence with a 2G/ON</li>
@@ -381,12 +359,22 @@
 
                             <h5>FOS Entries:</h5>
                             <pre class="brush: html; highlight: [2,4]">
+                                <!-- REMOVE CREW FROM SEQUENCE -->
                                 2G/EMP/SEQ/DD/ON &#187;
                                 ET &#187;
 
+                                <!-- KILL ORIGINAL SEQUENCE -->
                                 HK/SEQ/DD/POS &#187;
                                 ET &#187;
 
+                                <!-- REBUILD SEQUENCE FOR NEW DEP DAY -->
+                                H4(D/I)/BASE/EQ//DD &#182;
+                                H5/FLT/DD/STA &#182;
+                                H5/FLT/DD/STA &#187;
+                                HZ/POS &#187;
+                                ET &#187;
+
+                                <!-- BUILD RPT SEQUENCE -->
                                 H4(D/I)/BASE/EQ//DD &#182;
                                 H7/RPT/DD/STA/STA/SITIME/x.xx (curr time - SITIME) &#187;
                                 HZ/POS &#187;
