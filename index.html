@@ -117,6 +117,8 @@
                                     <li><a href="#fa-mt">Missed Trip</a></li>
                                     <li><a href="#fa-dtnd-orig">DTND (Orig)</a></li>
                                     <li><a href="#fa-dtnd-mid">DTND (Mid)</a></li>
+                                    <li><a href="#fa-lll-dhd-swap">LLL & DHD Swap</a></li>
+                                    <li><a href="#fa-ra-aa">RA/AA</a></li>
                                 </ul>
                             </li>
                             <li><a href="#pilot">Pilot</a>
@@ -458,6 +460,78 @@
             </section>
         <!-- end section -->
 
+        <section id="fa-lll-dhd-swap">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Last Live Leg & DHD on Last Leg [JCBA 10.P]</h4>
+                    <table class="table table-striped text-center">
+                        <tr>
+                            <td><B>Criteria</B></td>
+                            <td><B>Last Live Leg</B></td>
+                            <td><B>Last Leg DHD Swap</B></td>
+                        </tr>
+                        <tr>
+                            <td>Orig FA on Last Leg of Seq</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Replacement FA currently on seq</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Replacement FA on NS</td>
+                            <td>No</td>
+                            <td>Yes; as a DHD</td>
+                        </tr>
+                        <tr>
+                            <td>How to process</td>
+                            <td>LLL Tool</td>
+                            <td>25/15 Modification</td>
+                        </tr>
+                    </table>
+                    <p>*Neither of these can interfere with a future sequence or cause an illegality</p>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </section>
+    <!-- end section -->
+
+    <section id="fa-ra-aa">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Request to DHD and Exceed Duty Limitations RA/AA [JCBA 16.O]</h4>
+                <h5>Summary: FA wants to move their deadhead from a deadhead only duty period on the last day of their sequence, to the end of the current duty period. This will put the FA over their rescheduled max duty period and collapse their sequence footprint. However, this flight must depart prior to their max duty period.</h5>
+                <h5>Requirements:</h5>
+
+                <ol>
+                    <li>FA has completed all working legs</li>
+                    <li>DHD is the only leg in the last duty period of their sequence</li>
+                    <li>Y class inventory is available on the requested DHD</li>
+                    <li>Desired DHD will block in past rescheduled max</li>
+                    <li>Desired DHD will block out prior to actual max</li>
+                </ol>
+
+                <h5>Calculations:</h5>
+                <pre class="brush: html; highlight: [2,4]">
+                    <!-- Block Out Time -->
+                    Actual Max + Sign-In Time = Requested DHD must block out before this time
+                    
+                    <!-- Block In Time -->
+                    Rescheduled Max + Sign-In Time = Requested DHD must block in after this time
+
+                    *** REMEMBER: THE FLIGHT CAN DELAY PAST THE BLOCK OUT TIME IN ACTUAL OPERATIONS ***
+                </pre>
+                
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </section>
+<!-- end section -->
+<hr>
                 <section id="pilot" class="section">
 
                     <div class="row">
