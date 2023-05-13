@@ -844,7 +844,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>Sick Removal (LH)</h4>
-                                <h5>Process:</h5>
+                                <h5>Process: Mid-Sequence</h5>
 
                                 <ol>
                                     <li>Enter absense in FOS with code SK, with a start date of today and tentative clear on last day of sequence</li>
@@ -869,6 +869,24 @@
                                     GOA/EMP/FLT/DD/POS/STA/STA/TKT &#187;
                                     ET &#187;
                                 </pre>
+
+                                <h5>Process: Origination</h5>
+
+                                <ol>
+                                    <li>Enter absense in FOS with code SK, with a start date of today and tentative clear on last day of sequence</li>
+                                    <li>Remove from sequence with 2G/SK</li>
+                                    <li>Send contact slip</li>
+                                    <li>Recover open sequence</li>
+                                </ol>
+
+                                <h5>FOS Entries:</h5>
+                                <pre class="brush: html; highlight: [2,4]">
+                                    A4/EMP/SK/DDMMMYY//DDMMMYY &#187;
+                                    ET &#187;
+                                    
+                                    2G/EMP/SEQ/DD/SK &#187;
+                                    ET &#187;
+                                </pre>
                             </div>
                             <!-- end col -->
                         </div>
@@ -880,7 +898,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Sick Removal (RSV)</h4>
-                            <h5>Process:</h5>
+                            <h5>Process: Mid-Sequence</h5>
 
                             <ol>
                                 <li>Enter absense in FOS with code SK, with a start date of today and tentative clear on last day of sequence</li>
@@ -914,6 +932,27 @@
                                 GOA/EMP/FLT/DD/POS/STA/STA/TKT &#187;
                                 ET &#187;
                             </pre>
+
+                            <h5>Process: Origination</h5>
+
+                                <ol>
+                                    <li>Enter absense in FOS with code SK, with a start date of today and tentative clear on last day of sequence</li>
+                                    <li>Remove from sequence with 2G/15</li>
+                                    <li>Send contact slip</li>
+                                    <li>Recover open sequence</li>
+                                </ol>
+
+                                <h5>FOS Entries:</h5>
+                                <pre class="brush: html; highlight: [2,4]">
+                                    A4/EMP/SK/DDMMMYY//DDMMMYY &#187;
+                                    ET &#187;
+                                    
+                                    2G/EMP/SEQ/DD/15 &#187;
+                                    ET &#187;
+
+                                    GC/EMP/DDMMM//S/SK&#187;
+                                    ET &#187;
+                                </pre>
                         </div>
                         <!-- end col -->
                     </div>
